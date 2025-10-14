@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Build and Test
         run: |
@@ -21,14 +21,13 @@ jobs:
           ./test.sh
 
       - name: Log in to Docker Hub
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v6
         with:
           push: true
-          tags: rakeshh729/fusionpact-devops-challenge:${{ github.sha }}
-
+          tags: ${{ secrets.DOCKER_USERNAME }}/fusionpact-devops-challenge:latest
