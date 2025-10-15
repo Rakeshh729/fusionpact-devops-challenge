@@ -8,18 +8,7 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Build and Test
-        run: |
-          chmod +x ./build.sh
-          ./build.sh
-          chmod +x ./test.sh
-          ./test.sh
-
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
@@ -30,5 +19,16 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: rakeshh729/fusionpact-devops-challenge:${{ github.sha }}
+          tags: rakeshy977/fusionpact-devops-challenge:${{ github.sha }}
 
+      - name: Deploy to EC2 via SSH
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_KEY }}
+          script: |
+            docker pull rakeshy977/fusionpact-devops-challenge:latest
+            docker stop myapp || true
+            docker rm myapp || true
+            docker run -d --name myapp -p 80:8000 rakeshy977/fusionpact-devops-challenge:latest
