@@ -30,4 +30,4 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: rakeshh729/fusionpact-devops-challenge:${{ github.sha }}
+          tags: rakeshy977/fusionpact-devops-challenge:${{ github.sha }}
