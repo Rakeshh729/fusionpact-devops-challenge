@@ -43,5 +43,5 @@ jobs:
             docker pull rakeshy977/frontend:latest
             docker stop frontend || true
             docker rm frontend || true
-            docker run -d --name frontend -p 80:80 <yourdockerhub>/frontend:latest
+            docker run -d --name frontend -p 80:80 rakeshy977/frontend:latest
 
