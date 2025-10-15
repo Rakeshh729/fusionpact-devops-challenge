@@ -36,6 +36,3 @@ async def get_users():
     Read user data from json file
     """
     return services.read_usersdata()
-@app.route("/")
-def home():
-    return send_from_directory('frontend', 'Devops_Intern.html')
